@@ -32,4 +32,4 @@ Aplicação Web Full-Stack desenvolvida para registrar, catalogar e homenagear a
 Crie o arquivo `.env` na raiz do projeto copiando a estrutura do modelo:
 
 ```bash
-cp .env.example .env
+- cp .env.example .env
