@@ -4,15 +4,15 @@ services:
     container_name: jardim_postgres
     restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-jardim_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgrespassword}
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-jardim_db}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -22,11 +22,16 @@ services:
     container_name: jardim_backend
     restart: always
     command: >
-      sh -c "python -m app.seed && uvicorn app.main:app --host 0.0.0.0 --port ${BACKEND_PORT}"
+      sh -c "python -m app.seed && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgrespassword@db:5432/jardim_db}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-chave_secreta_fallback_128bit}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-120}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@jardimdemocracia.org.br}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
     ports:
-      - "${BACKEND_PORT}:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -36,7 +41,7 @@ services:
     container_name: jardim_frontend
     restart: always
     ports:
-      - "${FRONTEND_PORT}:80"
+      - "${FRONTEND_PORT:-80}:80"
     depends_on:
       - backend
 

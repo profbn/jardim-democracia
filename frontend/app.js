@@ -1,4 +1,8 @@
-const API_URL = '/api/mulheres';
+const BACKEND_CLOUD_URL = 'https://seu-backend.onrender.com/api/mulheres';
+
+const API_URL = window.location.hostname.includes('github.io')
+  ? BACKEND_CLOUD_URL
+  : '/api/mulheres';
 
 const jardim = document.getElementById('jardim');
 const modal = document.getElementById('modal');

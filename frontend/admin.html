@@ -2,85 +2,139 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Painel de Administração - Jardim Digital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo - Jardim Digital</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body { font-family: sans-serif; background: #f4f4f9; padding: 40px; }
-    .card { background: white; padding: 30px; border-radius: 8px; max-width: 500px; margin: 20px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; }
-    button { background: #1b3d17; color: white; border: none; font-weight: bold; cursor: pointer; }
-    button:hover { background: #630d0d; }
+    .admin-container { max-width: 900px; margin: 50px auto; padding: 20px; }
+    .card-admin { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: var(--verde-escuro); }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
+    .btn-submit { background: var(--verde-escuro); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .btn-submit:hover { background: var(--vinho); }
     .hidden { display: none; }
+    .tabela-admin { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .tabela-admin th, .tabela-admin td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    .btn-delete { background: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
   </style>
 </head>
 <body>
 
-  <!-- Tela de Login -->
-  <div id="login-box" class="card">
-    <h2>Login do Administrador</h2>
-    <form id="form-login">
-      <input type="text" id="username" placeholder="Usuário" required />
-      <input type="password" id="password" placeholder="Senha" required />
-      <button type="submit">Entrar</button>
-    </form>
-    <p id="login-msg" style="color:red;"></p>
-  </div>
+  <div class="admin-container">
+    <div id="box-login" class="card-admin">
+      <h2>🔐 Login do Administrador</h2>
+      <form id="form-login">
+        <div class="form-group">
+          <label>E-mail:</label>
+          <input type="email" id="login-email" required placeholder="admin@jardimdemocracia.org.br" />
+        </div>
+        <div class="form-group">
+          <label>Senha:</label>
+          <input type="password" id="login-password" required />
+        </div>
+        <button type="submit" class="btn-submit">Entrar</button>
+      </form>
+      <p id="msg-erro" style="color:red; margin-top:10px;"></p>
+    </div>
 
-  <!-- Formulário de Cadastro Protegido -->
-  <div id="admin-box" class="card hidden">
-    <h2>Cadastrar Nova Mulher no Jardim</h2>
-    <form id="form-cadastrar">
-      <input type="text" id="nome" placeholder="Nome Completo" required />
-      <input type="text" id="peri" placeholder="Período (Ex: 1900 - 1980)" required />
-      <select id="categoria" required>
-        <option value="politica">Política</option>
-        <option value="educacao">Educação</option>
-        <option value="ativismo">Ativismo</option>
-        <option value="literatura">Literatura</option>
-        <option value="indigena">Povos Indígenas</option>
-      </select>
-      <input type="color" id="cor" value="#ff0000" required />
-      <textarea id="bio" placeholder="Biografia e Trajetória" rows="4" required></textarea>
-      <textarea id="feitos" placeholder="Principais Feitos e Legado" rows="4" required></textarea>
-      <button type="submit">Cadastrar no Banco</button>
-    </form>
-    <button onclick="logout()" style="background:#777; margin-top: 20px;">Sair</button>
+    <div id="box-painel" class="card-admin hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2>🌿 Gestão do Jardim Digital</h2>
+        <div>
+          <a href="index.html" style="margin-right:15px; text-decoration:none; font-weight:bold; color:var(--verde-escuro);">Ver Site</a>
+          <button onclick="logout()" style="background:#777; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">Sair</button>
+        </div>
+      </div>
+
+      <h3>Cadastrar Nova Personalidade</h3>
+      <form id="form-cadastrar" style="margin-top:15px;">
+        <div class="form-group">
+          <label>Nome Completo:</label>
+          <input type="text" id="cad-nome" required />
+        </div>
+        <div class="form-group">
+          <label>Período de Vida:</label>
+          <input type="text" id="cad-peri" required placeholder="Ex: 1900 - 1980" />
+        </div>
+        <div class="form-group">
+          <label>Categoria:</label>
+          <select id="cad-categoria" required>
+            <option value="politica">Política</option>
+            <option value="educacao">Educação</option>
+            <option value="ativismo">Ativismo</option>
+            <option value="literatura">Literatura</option>
+            <option value="indigena">Povos Indígenas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Cor da Flor (Hexadecimal):</label>
+          <input type="color" id="cad-cor" value="#b22222" required />
+        </div>
+        <div class="form-group">
+          <label>Biografia:</label>
+          <textarea id="cad-bio" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Principais Feitos:</label>
+          <textarea id="cad-feitos" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Cadastrar Registro</button>
+      </form>
+
+      <h3 style="margin-top:40px;">Registros Cadastrados</h3>
+      <table class="tabela-admin">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-corpo"></tbody>
+      </table>
+    </div>
   </div>
 
   <script>
-    const API_URL = '/api';
+    const API_URL = window.location.hostname.includes('github.io')
+      ? 'https://seu-backend.onrender.com/api'
+      : '/api';
+
+    const boxLogin = document.getElementById('box-login');
+    const boxPainel = document.getElementById('box-painel');
 
     document.getElementById('form-login').addEventListener('submit', async (e) => {
       e.preventDefault();
       const body = new URLSearchParams();
-      body.append('username', document.getElementById('username').value);
-      body.append('password', document.getElementById('password').value);
+      body.append('username', document.getElementById('login-email').value);
+      body.append('password', document.getElementById('login-password').value);
 
-      const res = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body
-      });
-
-      if (res.ok) {
+      try {
+        const res = await fetch(`${API_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body
+        });
+        if (!res.ok) throw new Error();
         const data = await res.json();
         localStorage.setItem('token', data.access_token);
-        carregarPainel();
-      } else {
-        document.getElementById('login-msg').innerText = 'Credenciais inválidas!';
+        verificarAutenticacao();
+      } catch (err) {
+        document.getElementById('msg-erro').innerText = 'Credenciais inválidas.';
       }
     });
 
     document.getElementById('form-cadastrar').addEventListener('submit', async (e) => {
       e.preventDefault();
       const token = localStorage.getItem('token');
-      
       const payload = {
-        nome: document.getElementById('nome').value,
-        peri: document.getElementById('peri').value,
-        categoria: document.getElementById('categoria').value,
-        cor: document.getElementById('cor').value,
-        bio: document.getElementById('bio').value,
-        feitos: document.getElementById('feitos').value
+        nome: document.getElementById('cad-nome').value,
+        peri: document.getElementById('cad-peri').value,
+        categoria: document.getElementById('cad-categoria').value,
+        cor: document.getElementById('cad-cor').value,
+        bio: document.getElementById('cad-bio').value,
+        feitos: document.getElementById('cad-feitos').value
       };
 
       const res = await fetch(`${API_URL}/mulheres`, {
@@ -93,17 +147,49 @@
       });
 
       if (res.ok) {
-        alert('Mulher cadastrada com sucesso!');
+        alert('Registro cadastrado com sucesso!');
         document.getElementById('form-cadastrar').reset();
+        carregarTabela();
       } else {
-        alert('Erro ao cadastrar. Verifique se sua sessão não expirou.');
+        alert('Erro ao cadastrar. Sessão expirada.');
       }
     });
 
-    function carregarPainel() {
+    async function carregarTabela() {
+      const res = await fetch(`${API_URL}/mulheres`);
+      const dados = await res.json();
+      const corpo = document.getElementById('tabela-corpo');
+      corpo.innerHTML = '';
+      dados.forEach(m => {
+        corpo.innerHTML += `
+          <tr>
+            <td>${m.nome}</td>
+            <td>${m.categoria}</td>
+            <td><button class="btn-delete" onclick="deletarItem(${m.id})">Excluir</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    async function deletarItem(id) {
+      if (!confirm('Deseja realmente remover este registro?')) return;
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${API_URL}/mulheres/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        carregarTabela();
+      } else {
+        alert('Erro ao remover o registro.');
+      }
+    }
+
+    function verificarAutenticacao() {
       if (localStorage.getItem('token')) {
-        document.getElementById('login-box').classList.add('hidden');
-        document.getElementById('admin-box').classList.remove('hidden');
+        boxLogin.classList.add('hidden');
+        boxPainel.classList.remove('hidden');
+        carregarTabela();
       }
     }
 
@@ -112,7 +198,7 @@
       location.reload();
     }
 
-    carregarPainel();
+    verificarAutenticacao();
   </script>
 </body>
 </html>
