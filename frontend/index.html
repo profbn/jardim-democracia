@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O Jardim Digital da Democracia Feminina</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1>O Jardim Digital da Democracia Feminina</h1>
+      <p>A Trajetória Política das Mulheres no Ceará: Da Invisibilidade ao Poder</p>
+      <a href="#jardim" class="btn-explorar">Explorar Jardim</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="secao-texto">
+      <h2>A Vivência do Silenciamento: O “Não-Lugar” Político</h2>
+      <p>
+        Para entender as mulheres deste jardim, é preciso compreender o deserto onde elas plantaram.
+        No século XIX e início do século XX, mulheres eram afastadas da vida pública e política,
+        vivendo uma espécie de invisibilidade social e civil.
+      </p>
+
+      <div class="vivencia-epoca">
+        “Imagine o Ceará de 1900: reuniões políticas aconteciam em clubes onde mulheres não entravam.
+        A voz feminina era limitada ao ambiente doméstico. Quando uma mulher ousava discutir política,
+        era vista como inadequada para a sociedade da época.”
+      </div>
+
+      <p>
+        Mesmo após o direito ao voto em 1932, a participação feminina na política continuou marcada
+        por preconceitos, silenciamento e desigualdade de oportunidades.
+      </p>
+    </section>
+
+    <section class="filtros-section">
+      <input type="text" id="pesquisa" placeholder="Pesquisar mulher..." />
+      <select id="filtro-categoria">
+        <option value="todas">Todas as Categorias</option>
+        <option value="politica">Política</option>
+        <option value="educacao">Educação</option>
+        <option value="ativismo">Ativismo</option>
+        <option value="literatura">Literatura</option>
+        <option value="indigena">Povos Indígenas</option>
+      </select>
+    </section>
+
+    <section class="linha-tempo">
+      <h2>Linha do Tempo</h2>
+      <div class="timeline-container">
+        <div class="timeline-item"><span>1800</span><p>Movimentos Republicanos</p></div>
+        <div class="timeline-item"><span>1884</span><p>Abolição da Escravidão no Ceará</p></div>
+        <div class="timeline-item"><span>1932</span><p>Direito ao Voto Feminino</p></div>
+        <div class="timeline-item"><span>1986</span><p>Primeira Prefeita de Capital</p></div>
+        <div class="timeline-item"><span>Atualidade</span><p>Ampliação da Representatividade</p></div>
+      </div>
+    </section>
+
+    <section class="jardim-section">
+      <h2>Flores da Resistência</h2>
+      <div class="jardim-display" id="jardim" aria-label="Jardim de mulheres cearenses"></div>
+    </section>
+  </main>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-nome">
+    <button class="close-btn" id="fecharModalBtn" aria-label="Fechar modal">✕</button>
+    <h2 id="modal-nome"></h2>
+    <p class="modal-datas"><strong>Período de vida:</strong> <span id="modal-peri"></span></p>
+    
+    <div class="modal-box">
+      <h3>Trajetória e Vivência</h3>
+      <p id="modal-bio"></p>
+    </div>
+
+    <div class="modal-box destaque">
+      <h3>Legado Político</h3>
+      <p id="modal-feitos"></p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
